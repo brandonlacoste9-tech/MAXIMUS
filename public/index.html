@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAXIMUS AI Assistant - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>⚡ MAXIMUS</h1>
+                <p>AI Assistant Dashboard</p>
+            </div>
+            <div class="header-actions">
+                <button id="refreshBtn" class="btn btn-secondary">🔄 Refresh</button>
+            </div>
+        </header>
+
+        <!-- Health Tiles -->
+        <section class="health-tiles">
+            <div class="tile" id="apiHealth">
+                <div class="tile-icon">🟢</div>
+                <div class="tile-content">
+                    <h3>API Status</h3>
+                    <p class="tile-value">Loading...</p>
+                </div>
+            </div>
+            <div class="tile" id="aiHealth">
+                <div class="tile-icon">🤖</div>
+                <div class="tile-content">
+                    <h3>AI Model</h3>
+                    <p class="tile-value">Loading...</p>
+                </div>
+            </div>
+            <div class="tile" id="telegramHealth">
+                <div class="tile-icon">📱</div>
+                <div class="tile-content">
+                    <h3>Telegram</h3>
+                    <p class="tile-value">Disabled</p>
+                </div>
+            </div>
+            <div class="tile" id="whatsappHealth">
+                <div class="tile-icon">💬</div>
+                <div class="tile-content">
+                    <h3>WhatsApp</h3>
+                    <p class="tile-value">Disabled</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics -->
+        <section class="metrics-section">
+            <h2>📊 Metrics</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h4>Total Requests</h4>
+                    <p class="metric-value" id="totalRequests">0</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Chat Messages</h4>
+                    <p class="metric-value" id="chatMessages">0</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Leads Created</h4>
+                    <p class="metric-value" id="leadsCreated">0</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Uptime</h4>
+                    <p class="metric-value" id="uptime">0s</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leads Table -->
+        <section class="leads-section">
+            <div class="section-header">
+                <h2>👥 Leads</h2>
+                <button id="addLeadBtn" class="btn btn-primary">+ Add Lead</button>
+            </div>
+            <div class="table-container">
+                <table class="leads-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Source</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody">
+                        <tr>
+                            <td colspan="6" class="empty-state">No leads yet. Add your first lead!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Personality Editor -->
+        <section class="personality-section">
+            <div class="section-header">
+                <h2>✨ Personality Editor</h2>
+                <button id="savePersonalityBtn" class="btn btn-primary">💾 Save</button>
+            </div>
+            <div class="editor-container">
+                <textarea id="personalityEditor" placeholder="Loading personality..."></textarea>
+            </div>
+            <div class="personality-preview" id="personalityPreview">
+                <h3>Preview</h3>
+                <div id="previewContent"></div>
+            </div>
+        </section>
+
+        <!-- Chat Interface -->
+        <section class="chat-section">
+            <h2>💬 Chat with MAXIMUS</h2>
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-message assistant">
+                    <strong>MAXIMUS:</strong> Hello! I'm MAXIMUS, your AI assistant. How can I help you today?
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Type your message..." />
+                <button id="sendBtn" class="btn btn-primary">Send</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for adding leads -->
+    <div id="addLeadModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Lead</h2>
+            <form id="addLeadForm">
+                <div class="form-group">
+                    <label for="leadName">Name:</label>
+                    <input type="text" id="leadName" required>
+                </div>
+                <div class="form-group">
+                    <label for="leadEmail">Email:</label>
+                    <input type="email" id="leadEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="leadPhone">Phone:</label>
+                    <input type="tel" id="leadPhone">
+                </div>
+                <div class="form-group">
+                    <label for="leadSource">Source:</label>
+                    <select id="leadSource">
+                        <option value="website">Website</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="referral">Referral</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="leadStatus">Status:</label>
+                    <select id="leadStatus">
+                        <option value="new">New</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="qualified">Qualified</option>
+                        <option value="converted">Converted</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Lead</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

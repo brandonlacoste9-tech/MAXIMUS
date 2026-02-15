@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  maximus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: maximus-ai
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - AI_PROVIDER=${AI_PROVIDER:-ollama}
+      - OLLAMA_HOST=${OLLAMA_HOST:-http://ollama:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama2}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - DEEPSEEK_MODEL=${DEEPSEEK_MODEL:-deepseek-chat}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ENABLED=${TELEGRAM_ENABLED:-false}
+      - WHATSAPP_ENABLED=${WHATSAPP_ENABLED:-false}
+      - WHATSAPP_PHONE_NUMBER=${WHATSAPP_PHONE_NUMBER}
+    volumes:
+      - ./PERSONALITY.md:/app/PERSONALITY.md
+      - ./data:/app/data
+    depends_on:
+      - ollama
+    networks:
+      - maximus-network
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: maximus-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - maximus-network
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: maximus-dashboard
+    ports:
+      - "8080:80"
+    depends_on:
+      - maximus
+    networks:
+      - maximus-network
+    restart: unless-stopped
+
+volumes:
+  ollama-data:
+    driver: local
+
+networks:
+  maximus-network:
+    driver: bridge
