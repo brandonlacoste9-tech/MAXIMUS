@@ -1,0 +1,14 @@
+apiVersion: v2
+name: maximus
+description: MAXIMUS AI Assistant - Self-hosted BYOK AI assistant
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - ai
+  - assistant
+  - chatbot
+  - ollama
+  - deepseek
+maintainers:
+  - name: MAXIMUS Team
