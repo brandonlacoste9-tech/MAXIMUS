@@ -10,6 +10,10 @@ RUN npm ci --only=production
 
 # Copy application code
 COPY src ./src
+
+# Copy PERSONALITY.md
+# Note: This can be overridden by mounting a volume in docker-compose
+# For runtime editing, mount PERSONALITY.md as a volume (read-write)
 COPY PERSONALITY.md ./
 
 # Create data directory

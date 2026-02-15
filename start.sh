@@ -13,8 +13,16 @@ if [ ! -f .env ]; then
     exit 1
 fi
 
+# Check if .env is readable
+if [ ! -r .env ]; then
+    echo "❌ .env file is not readable"
+    exit 1
+fi
+
 # Source environment
+set -a
 source .env
+set +a
 
 echo "Configuration:"
 echo "  AI Provider: $AI_PROVIDER"

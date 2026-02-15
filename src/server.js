@@ -29,6 +29,8 @@ app.get('/health', (req, res) => {
 });
 
 // Serve frontend
+// Note: In production, add rate limiting to prevent abuse
+// Example: app.use(rateLimit({ windowMs: 15*60*1000, max: 100 }))
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });

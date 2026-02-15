@@ -21,7 +21,7 @@ services:
       - WHATSAPP_ENABLED=${WHATSAPP_ENABLED:-false}
       - WHATSAPP_PHONE_NUMBER=${WHATSAPP_PHONE_NUMBER}
     volumes:
-      - ./PERSONALITY.md:/app/PERSONALITY.md:ro
+      - ./PERSONALITY.md:/app/PERSONALITY.md
       - ./data:/app/data
     depends_on:
       - ollama
