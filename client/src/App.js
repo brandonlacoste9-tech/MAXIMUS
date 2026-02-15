@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import HealthTiles from './components/HealthTiles';
 import MetricsDisplay from './components/MetricsDisplay';
+import MessagingBridges from './components/MessagingBridges';
 import LeadsTable from './components/LeadsTable';
 import PersonalityEditor from './components/PersonalityEditor';
 import ChatInterface from './components/ChatInterface';
@@ -50,6 +51,7 @@ function App() {
           <div className="dashboard-view">
             <HealthTiles />
             <MetricsDisplay />
+            <MessagingBridges />
           </div>
         )}
         {activeTab === 'chat' && <ChatInterface />}
