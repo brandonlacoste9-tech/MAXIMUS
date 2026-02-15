@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+const { apiLimiter, chatLimiter, writeLimiter } = require('./middleware/rateLimiter');
 const healthRoutes = require('./routes/health');
 const metricsRoutes = require('./routes/metrics');
 const leadsRoutes = require('./routes/leads');
@@ -21,19 +22,22 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// API Routes
+// Apply rate limiting to API routes
+app.use('/api/', apiLimiter);
+
+// API Routes with specific rate limiters
 app.use('/api/health', healthRoutes);
 app.use('/api/metrics', metricsRoutes);
-app.use('/api/leads', leadsRoutes);
-app.use('/api/personality', personalityRoutes);
-app.use('/api/chat', chatRoutes);
+app.use('/api/leads', writeLimiter, leadsRoutes);
+app.use('/api/personality', writeLimiter, personalityRoutes);
+app.use('/api/chat', chatLimiter, chatRoutes);
 app.use('/api/bridges', bridgesRoutes);
 
-// Serve static files from React build
+// Serve static files from React build (with rate limiting)
 app.use(express.static(path.join(__dirname, '../client/build')));
 
-// Serve React app for all other routes
-app.get('*', (req, res) => {
+// Serve React app for all other routes (with rate limiting)
+app.get('*', apiLimiter, (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
