@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  maximus:
+    build: .
+    container_name: maximus-ai
+    ports:
+      - "3001:3001"
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    env_file:
+      - .env
+    volumes:
+      - ./PERSONALITY.md:/app/PERSONALITY.md
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - maximus-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: maximus-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - maximus-network
+
+volumes:
+  ollama-data:
+
+networks:
+  maximus-network:
+    driver: bridge
